@@ -9,12 +9,15 @@ sys.path.insert(0, "lib")
 # custom libs
 import markdown
 
-class StringData():
+
+class StringData() :
     def __init__(self) :
         self.stringData = markdown.markdown("# head #")
 
-class MainHandler(webapp2.RequestHandler):
-    def get(self):
+class MainHandler(webapp2.RequestHandler) :
+    arr_post = []
+
+    def get(self) :
         data = StringData()
         self.response.write(data.stringData)
         user = users.get_current_user()
@@ -23,7 +26,7 @@ class MainHandler(webapp2.RequestHandler):
         else :
             greeting = "<a href=%s>Sign in or register</a>" % (users.create_login_url('/'))
 
-        self.response.write("<html><body> %s </body></html>" % (greeting) )
+        self.response.out.write("<html><head><script src='src/main.js'></script></head><body> %s </body></html>" % (greeting) )
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
